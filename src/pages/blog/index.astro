@@ -6,10 +6,10 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-const PAGE_DESC = 'Essays and notes on software, systems, and the occasional rabbit hole.';
+const posts = (
+	await getCollection('blog', ({ data }) => (import.meta.env.PROD ? !data.draft : true))
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const PAGE_DESC = 'Posts and notes.';
 ---
 
 <!doctype html>
@@ -27,24 +27,28 @@ const PAGE_DESC = 'Essays and notes on software, systems, and the occasional rab
 				<p class="count">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
 			</section>
 
-			<ul class="post-list">
-				{
-					posts.map((post, i) => (
-						<li class="post-row reveal" style={`animation-delay:${0.05 * (i + 1)}s`}>
-							<a href={`/blog/${post.id}/`}>
-								<span class="idx">{String(posts.length - i).padStart(2, '0')}</span>
-								<span class="meta">
-									<h2 class="title">{post.data.title}</h2>
-									<p class="desc">{post.data.description}</p>
-								</span>
-								<span class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</span>
-							</a>
-						</li>
-					))
-				}
-			</ul>
+			{
+				posts.length === 0 ? (
+					<p class="empty reveal">Nothing published yet — first post is on its way.</p>
+				) : (
+					<ul class="post-list">
+						{posts.map((post, i) => (
+							<li class="post-row reveal" style={`animation-delay:${0.05 * (i + 1)}s`}>
+								<a href={`/blog/${post.id}/`}>
+									<span class="idx">{String(posts.length - i).padStart(2, '0')}</span>
+									<span class="meta">
+										<h2 class="title">{post.data.title}</h2>
+										<p class="desc">{post.data.description}</p>
+									</span>
+									<span class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
 		</main>
 		<Footer />
 
@@ -67,6 +71,12 @@ const PAGE_DESC = 'Essays and notes on software, systems, and the occasional rab
 				margin: 1.2rem 0 0;
 			}
 
+			.empty {
+				padding: 3rem 0;
+				color: var(--muted);
+				font-family: var(--font-mono), monospace;
+				font-size: 0.92rem;
+			}
 			.post-list {
 				list-style: none;
 				margin: 0;

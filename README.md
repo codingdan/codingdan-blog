@@ -39,6 +39,10 @@ Write your post here.
 
 `pubDate` is validated at build time, so a malformed date fails the build instead of shipping broken.
 
+### Drafts
+
+Add `draft: true` to a post's frontmatter to keep it **local-only**: it renders in `npm run dev` so you can preview it, but is excluded from the production build — no page, not in `/blog`, not in the RSS feed. Remove the line (or set `draft: false`) when you're ready to publish.
+
 ## Deploy — Cloudflare Pages
 
 1. Push this repo to GitHub.

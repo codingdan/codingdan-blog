@@ -4,9 +4,11 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_TAGLINE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
-const posts = (await getCollection('blog'))
+const posts = (
+	await getCollection('blog', ({ data }) => (import.meta.env.PROD ? !data.draft : true))
+)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 4);
 ---
@@ -20,18 +22,16 @@ const posts = (await getCollection('blog'))
 		<Header />
 		<main>
 			<section class="hero reveal">
-				<p class="kicker">Software · Systems · Side quests</p>
-				<h1>
-					Field notes from<br /><span class="grad">the terminal.</span>
-				</h1>
-				<p class="lead">{SITE_TAGLINE}</p>
+				<h1><span class="grad">{SITE_TITLE}</span></h1>
+				<p class="lead">A personal blog. Writing in progress.</p>
 				<div class="cta">
 					<a href="/blog" class="btn btn-primary">Read the writing →</a>
-					<a href="/about" class="btn btn-ghost">About</a>
 				</div>
 			</section>
 
-			<section class="recent">
+			{
+				posts.length > 0 && (
+				<section class="recent">
 				<header class="recent-head">
 					<h2>Latest</h2>
 					<a href="/blog" class="all">All posts →</a>
@@ -56,6 +56,8 @@ const posts = (await getCollection('blog'))
 					}
 				</ul>
 			</section>
+				)
+			}
 		</main>
 		<Footer />
 
@@ -74,7 +76,6 @@ const posts = (await getCollection('blog'))
 				-webkit-background-clip: text;
 				background-clip: text;
 				color: transparent;
-				font-style: italic;
 			}
 			.hero .lead {
 				margin-top: 1.4rem;

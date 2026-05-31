@@ -3,6 +3,7 @@ title: 'Hello, world — starting codingdan'
 description: 'Why I finally spun up a blog, and what I plan to put here.'
 pubDate: 'May 28 2026'
 heroImage: '../../assets/blog-placeholder-3.jpg'
+draft: true # placeholder content — visible locally, hidden on the live site
 ---
 
 I've been meaning to start a blog for roughly the entire length of my career. The usual things got in the way: picking the "right" stack, an unhealthy attachment to a perfect first post, and the quiet suspicion that nobody would read it anyway.

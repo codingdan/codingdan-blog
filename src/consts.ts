@@ -1,10 +1,10 @@
 // Global site metadata. Imported anywhere via `import { SITE_TITLE } from '../consts'`.
 
 export const SITE_TITLE = 'codingdan';
-export const SITE_DESCRIPTION =
-	'Notes from the terminal — software, systems, and the occasional rabbit hole.';
-export const SITE_TAGLINE = 'Field notes on software, systems & side quests.';
+// Neutral placeholder — used for SEO/social cards and the RSS feed.
+// Replace with your own description when you're ready.
+export const SITE_DESCRIPTION = 'The personal blog of codingdan.';
 
-// Used in the footer + about page.
-export const AUTHOR = 'Dan';
+// Shown in the footer copyright line.
+export const AUTHOR = 'codingdan';
 export const GITHUB_URL = 'https://github.com/codingdan';

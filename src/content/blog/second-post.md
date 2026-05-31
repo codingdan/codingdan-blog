@@ -3,6 +3,7 @@ title: 'How this blog is built'
 description: 'Astro content collections, a hand-rolled dark theme, and a zero-config deploy to Cloudflare Pages.'
 pubDate: 'May 30 2026'
 heroImage: '../../assets/blog-placeholder-2.jpg'
+draft: true # placeholder content — visible locally, hidden on the live site
 ---
 
 As promised, here's the short tour of how `codingdan` is put together. The goals were boring on purpose: fast pages, no client-side JavaScript I don't need, and a writing flow that's just Markdown files in a folder.
