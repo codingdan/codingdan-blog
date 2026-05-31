@@ -4,12 +4,11 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, fontProviders } from 'astro/config';
 
-// NOTE: update `site` to your final URL once Cloudflare Pages assigns one
-// (e.g. https://codingdan-blog.pages.dev) or your custom domain. It is used
-// for canonical URLs, the sitemap, and the RSS feed.
+// `site` is the canonical public URL — used for canonical tags, the sitemap,
+// and the RSS feed. This is the custom domain attached to the Pages project.
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://codingdan-blog.pages.dev',
+	site: 'https://blog.codingdan.com',
 	integrations: [mdx(), sitemap()],
 	markdown: {
 		shikiConfig: {
