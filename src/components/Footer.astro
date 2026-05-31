@@ -1,0 +1,59 @@
+---
+import { SITE_TITLE, AUTHOR, GITHUB_URL } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	<div class="inner">
+		<div class="left">
+			<span class="mark">~/{SITE_TITLE}</span>
+			<span class="copy">© {today.getFullYear()} {AUTHOR}. Built with Astro.</span>
+		</div>
+		<div class="links">
+			<a href="/rss.xml">RSS</a>
+			<a href={GITHUB_URL} target="_blank" rel="me noopener">GitHub</a>
+			<a href="#top">Top ↑</a>
+		</div>
+	</div>
+</footer>
+
+<style>
+	footer {
+		flex-shrink: 0;
+		border-top: 1px solid var(--border-soft);
+		margin-top: 4rem;
+	}
+	.inner {
+		width: var(--page-wide);
+		max-width: calc(100% - 2.5rem);
+		margin-inline: auto;
+		padding: 2rem 0 2.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+		font-family: var(--font-mono), monospace;
+		font-size: 0.78rem;
+		color: var(--faint);
+	}
+	.left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+	.mark {
+		color: var(--muted);
+	}
+	.links {
+		display: flex;
+		gap: 1.25rem;
+	}
+	.links a {
+		color: var(--muted);
+	}
+	.links a:hover {
+		color: var(--accent);
+		text-decoration: none;
+	}
+</style>

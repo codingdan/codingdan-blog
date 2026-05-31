@@ -1,0 +1,212 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_TAGLINE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero reveal">
+				<p class="kicker">Software · Systems · Side quests</p>
+				<h1>
+					Field notes from<br /><span class="grad">the terminal.</span>
+				</h1>
+				<p class="lead">{SITE_TAGLINE}</p>
+				<div class="cta">
+					<a href="/blog" class="btn btn-primary">Read the writing →</a>
+					<a href="/about" class="btn btn-ghost">About</a>
+				</div>
+			</section>
+
+			<section class="recent">
+				<header class="recent-head">
+					<h2>Latest</h2>
+					<a href="/blog" class="all">All posts →</a>
+				</header>
+
+				<ul class="post-list">
+					{
+						posts.map((post, i) => (
+							<li class="post-row reveal" style={`animation-delay:${0.08 * (i + 1)}s`}>
+								<a href={`/blog/${post.id}/`}>
+									<span class="idx">{String(i + 1).padStart(2, '0')}</span>
+									<span class="meta">
+										<h3 class="title">{post.data.title}</h3>
+										<p class="desc">{post.data.description}</p>
+									</span>
+									<span class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+
+		<style>
+			.hero {
+				padding: clamp(2rem, 7vw, 5rem) 0 clamp(3rem, 8vw, 6rem);
+				border-bottom: 1px solid var(--border-soft);
+			}
+			.hero h1 {
+				font-size: var(--step-5);
+				font-weight: 500;
+				margin: 0.5rem 0 0;
+			}
+			.grad {
+				background: linear-gradient(100deg, var(--accent), var(--accent-soft));
+				-webkit-background-clip: text;
+				background-clip: text;
+				color: transparent;
+				font-style: italic;
+			}
+			.hero .lead {
+				margin-top: 1.4rem;
+			}
+			.cta {
+				display: flex;
+				gap: 0.75rem;
+				margin-top: 2rem;
+				flex-wrap: wrap;
+			}
+			.btn {
+				font-family: var(--font-mono), monospace;
+				font-size: 0.85rem;
+				padding: 0.7em 1.2em;
+				border-radius: 10px;
+				border: 1px solid transparent;
+				transition:
+					transform 0.18s var(--ease),
+					background 0.18s var(--ease),
+					border-color 0.18s var(--ease);
+			}
+			.btn:hover {
+				text-decoration: none;
+				transform: translateY(-2px);
+			}
+			.btn-primary {
+				background: var(--accent);
+				color: #1a0a05;
+				font-weight: 500;
+			}
+			.btn-primary:hover {
+				background: var(--accent-soft);
+				color: #1a0a05;
+			}
+			.btn-ghost {
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.btn-ghost:hover {
+				border-color: var(--accent-line);
+				color: var(--accent);
+			}
+
+			.recent {
+				padding-top: 3rem;
+			}
+			.recent-head {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				margin-bottom: 1.5rem;
+			}
+			.recent-head h2 {
+				margin: 0;
+				font-size: var(--step-2);
+			}
+			.all {
+				font-family: var(--font-mono), monospace;
+				font-size: 0.8rem;
+				color: var(--muted);
+			}
+			.all:hover {
+				color: var(--accent);
+				text-decoration: none;
+			}
+
+			.post-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.post-row {
+				border-top: 1px solid var(--border-soft);
+			}
+			.post-row:last-child {
+				border-bottom: 1px solid var(--border-soft);
+			}
+			.post-row a {
+				display: grid;
+				grid-template-columns: auto 1fr auto;
+				gap: 1.5rem;
+				align-items: baseline;
+				padding: 1.5rem 0.5rem;
+				color: inherit;
+				transition: background 0.2s var(--ease);
+			}
+			.post-row a:hover {
+				text-decoration: none;
+				background: linear-gradient(
+					90deg,
+					var(--accent-dim),
+					transparent 80%
+				);
+			}
+			.idx {
+				font-family: var(--font-mono), monospace;
+				font-size: 0.8rem;
+				color: var(--faint);
+				padding-top: 0.35em;
+			}
+			.title {
+				font-size: var(--step-1);
+				margin: 0 0 0.25rem;
+				color: var(--text-strong);
+				transition: color 0.18s var(--ease);
+			}
+			.post-row a:hover .title {
+				color: var(--accent);
+			}
+			.desc {
+				margin: 0;
+				color: var(--muted);
+				font-size: var(--step--1);
+				line-height: 1.5;
+			}
+			.date {
+				font-family: var(--font-mono), monospace;
+				font-size: 0.74rem;
+				color: var(--faint);
+				white-space: nowrap;
+				padding-top: 0.4em;
+			}
+
+			@media (max-width: 600px) {
+				.post-row a {
+					grid-template-columns: auto 1fr;
+				}
+				.date {
+					grid-column: 2;
+					padding-top: 0.5rem;
+				}
+			}
+		</style>
+	</body>
+</html>
