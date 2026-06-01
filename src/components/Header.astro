@@ -15,12 +15,9 @@ const isHome = Astro.url.pathname === '/';
 		{
 			isHome && (
 				<script is:inline define:vars={{ text: SITE_TITLE }}>
-					{`
-					(function () {
-						var name = document.querySelector('.brand.home .brand-name');
-						var caret = document.querySelector('.brand.home .caret');
-						if (!name) return;
-						if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+					var name = document.querySelector('.brand.home .brand-name');
+					var caret = document.querySelector('.brand.home .caret');
+					if (name && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
 						name.textContent = ''; // runs before paint, so no flash of the full word
 						if (caret) caret.classList.add('typing');
 						var i = 0;
@@ -32,8 +29,7 @@ const isHome = Astro.url.pathname === '/';
 								caret.classList.remove('typing');
 							}
 						})();
-					})();
-					`}
+					}
 				</script>
 			)
 		}
