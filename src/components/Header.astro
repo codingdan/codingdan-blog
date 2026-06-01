@@ -1,14 +1,42 @@
 ---
 import { SITE_TITLE, GITHUB_URL } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+
+const isHome = Astro.url.pathname === '/';
 ---
 
 <header id="top">
 	<nav>
-		<a href="/" class="brand" aria-label={`${SITE_TITLE} — home`}>
-			<span class="prompt">~/</span><span class="brand-name">{SITE_TITLE}</span>
-			<span class="caret" aria-hidden="true"></span>
+		<a href="/" class:list={['brand', { home: isHome }]} aria-label={`${SITE_TITLE} — home`}>
+			<span class="prompt">~/</span><span class="brand-name">{SITE_TITLE}</span><span
+				class="caret"
+				aria-hidden="true"></span>
 		</a>
+		{
+			isHome && (
+				<script is:inline define:vars={{ text: SITE_TITLE }}>
+					{`
+					(function () {
+						var name = document.querySelector('.brand.home .brand-name');
+						var caret = document.querySelector('.brand.home .caret');
+						if (!name) return;
+						if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+						name.textContent = ''; // runs before paint, so no flash of the full word
+						if (caret) caret.classList.add('typing');
+						var i = 0;
+						(function tick() {
+							name.textContent = text.slice(0, i);
+							if (i++ < text.length) {
+								setTimeout(tick, 85);
+							} else if (caret) {
+								caret.classList.remove('typing');
+							}
+						})();
+					})();
+					`}
+				</script>
+			)
+		}
 
 		<div class="nav-links">
 			<HeaderLink href="/">Home</HeaderLink>
@@ -76,13 +104,27 @@ import HeaderLink from './HeaderLink.astro';
 		color: var(--text-strong);
 	}
 	.caret {
-		display: inline-block;
+		display: none;
 		width: 0.5em;
 		height: 1.05em;
 		margin-left: 0.15em;
 		background: var(--accent);
 		transform: translateY(0.12em);
+	}
+	/* The blinking caret only lives on the home page — it's distracting while reading. */
+	.brand.home .caret {
+		display: inline-block;
 		animation: blink 1.2s steps(1) infinite;
+	}
+	/* Hold the caret solid while the name types itself out. */
+	.brand.home .caret.typing {
+		animation: none;
+		opacity: 1;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.brand.home .caret {
+			animation: none;
+		}
 	}
 	@keyframes blink {
 		0%,

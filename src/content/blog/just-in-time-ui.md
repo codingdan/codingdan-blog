@@ -11,11 +11,11 @@ Just-in-time compilation revolutionized how software could be optimized for *whe
 
 I think the agentic coding revolution is about to give user interfaces the same treatment.
 
-When I think about how I want to get at a piece of information, how I want to interact with it, visualize it, add to it, all of that can now be hyper-optimized for my specific use of that data.
+When I think about how I want to access some piece of data, how I want to interact with it, visualize it, add to it, all of that can now be hyper-optimized for my specific use of that data.
 
 Here's a concrete example from this past weekend. I hooked Claude up to my Garmin MCP and my Withings MCP. Together those are a pretty rich picture of my health metrics, and Garmin already does a lot of work to analyze that data and surface it back to me. But I wanted to go a step further & connect it with what I was actually doing in my day, the choices I'm making and the things I am experiencing. That's the piece that always feels missing. I wanted a life journal app.
 
-Now, I know there are probably plenty of life-logging and journaling apps that already do this. It's not that they don't work. The problem is they probably don't expose their data in a way my AI agent can actually consume. And they are probably way overbuilt for the simple use case that I have. Their UI is surely built to appeal to a broad set of users, which is how they get popular, so it's generalized by design. But I have a very specific case in mind, and with agentic coding I can just build the interface I actually need, and expose it to my agent as a first-class user.
+Now, I know there are probably plenty of life-logging and journaling apps that already do this. It's not that they don't work. The problem is they probably don't expose their data in a way my AI agent can actually consume. And they are probably way overbuilt for the simple use case that I have. Their UI is surely built to appeal to a broad set of users, which is how they get popular, so it's generalized by design. But I have a very specific case in mind, and with agentic coding I can just build the interface I actually need, and expose it to my agent as a first-class user. If my needs evolve, so does the interface. It doesn't need to be static anymore.
 
 So I had Claude whip up a tool to log events as I go about my day. Had a coffee. Had some drinks. Stressed about a meeting. Just little notes, frictionless to add them in the moment because I just open the app, tap the button or add some text, and im done.
 
