@@ -1,5 +1,5 @@
 ---
-title: 'From a Ramble to a Playable Game'
+title: 'From a Ramble to a Game'
 description: 'I built a no-human-in-the-loop pipeline that goes from a spoken game idea to a playable game (part 1)'
 pubDate: 'Apr 18 2026'
 heroImage: '../../assets/oskar-screenshot.png'
